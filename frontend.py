@@ -1,4 +1,4 @@
-
+from huggingface_hub import hf_hub_download
 import streamlit as st
 import pandas as pd
 import joblib
@@ -11,10 +11,14 @@ st.set_page_config(
     layout="centered"
 )
 
-# Load the complete trained Pipeline
+# Load model from Hugging Face
 @st.cache_resource
 def load_model():
-    return joblib.load("fin_shield_model_new.joblib")
+    model_path = hf_hub_download(
+        repo_id="kamrandar1911/fin-shield-model",
+        filename="fin_shield_model_new.joblib"
+    )
+    return joblib.load(model_path)
 
 try:
     model = load_model()
